@@ -295,3 +295,8 @@ footer { display: none; }
   .history-copy { font-size: .75rem; overflow-wrap: anywhere; }
   .history-time { grid-column: auto; text-align: right; font-size: .65rem; }
 }
+
+/* The release dialog always has exactly two storage locations. */
+.location-options.location-options--release {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
