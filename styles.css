@@ -206,3 +206,89 @@ dialog p:not(.section-kicker) { margin: 0 0 22px; color: var(--muted); font-size
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+
+/* Compact dashboard: keep the controls in view and scroll the log independently. */
+.site-header { max-width: 968px; padding: 8px 24px; gap: 12px; }
+.brand { gap: 8px; }
+.brand img { width: 32px; height: 32px; }
+.brand small { display: none; }
+.hero { grid-column: 1 / -1; padding: 6px 0 10px; }
+.hero .eyebrow, .hero-copy { display: none; }
+h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1; letter-spacing: -.025em; }
+h1 br { display: none; }
+h1 em::before { content: " "; }
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto minmax(110px, 1fr);
+  gap: 12px;
+  height: calc(100svh - 60px);
+  min-height: 540px;
+  padding-bottom: 12px;
+}
+.status-card, .update-panel, .history-panel { padding: 16px; border-radius: 16px; margin: 0; }
+.status-card { align-self: start; }
+.section-kicker { margin-bottom: 4px; font-size: .72rem; }
+h2 { font-size: 1.6rem; line-height: 1.05; }
+.badge-display { margin-top: 14px; gap: 14px; }
+.badge-icon { width: 64px; height: 88px; border-radius: 10px; }
+.badge-icon img { width: 38px; margin-top: 0; }
+.badge-icon::after { bottom: 8px; font-size: .5rem; }
+.badge-hole { top: 6px; width: 20px; height: 6px; }
+.badge-details strong { font-size: 1.3rem; line-height: 1.2; }
+.badge-details > span:last-child { font-size: .75rem; }
+.step-number { width: 30px; height: 30px; }
+.panel-heading { gap: 10px; }
+#badge-form { margin-top: 12px; }
+.field-label { margin-bottom: 5px; font-size: .72rem; }
+input[type="text"] { min-height: 44px; padding: 0 12px; }
+fieldset { margin: 12px 0; }
+.location-options { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.location-option { min-height: 48px; padding: 8px; gap: 5px; justify-content: center; }
+.location-option__icon, .location-option small, .radio-mark { display: none; }
+.location-option strong { font-size: .8rem; }
+.primary-button { min-height: 44px; padding: 0 14px; }
+.release-row { flex-direction: row; align-items: center; gap: 8px; margin-top: 12px; padding-top: 12px; }
+.release-row strong { font-size: .8rem; }
+.release-row span { display: none; }
+.release-row button { width: auto; flex: 0 0 auto; font-size: .8rem; padding: 0 10px; }
+.form-message { margin-top: 8px; min-height: 0; font-size: .75rem; }
+.form-message:empty { display: none; }
+.history-panel { grid-column: 1 / -1; display: flex; flex-direction: column; min-height: 0; }
+.history-panel .panel-heading { flex: 0 0 auto; }
+.history-list { margin-top: 10px; overflow-y: auto; min-height: 0; overscroll-behavior: contain; scrollbar-gutter: stable; }
+.history-item { padding: 10px 0; }
+.history-empty { padding: 10px 0; }
+footer { display: none; }
+
+@media (max-width: 680px) {
+  .site-header { padding: 6px 12px; }
+  .connection { padding: 6px 10px; }
+  main {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto minmax(100px, 1fr);
+    gap: 8px;
+    height: calc(100svh - 44px);
+    min-height: 620px;
+    padding-bottom: 8px;
+  }
+  .hero { padding: 2px 0; }
+  h1 { font-size: 1.8rem; }
+  .status-card, .update-panel, .history-panel { padding: 12px; }
+  .status-card__header { align-items: center; }
+  .status-card__header .section-kicker { display: none; }
+  .status-card__header h2 { font-size: 1.15rem; }
+  .badge-display { margin-top: 8px; gap: 10px; }
+  .badge-icon { width: 42px; height: 58px; }
+  .badge-icon img { width: 28px; }
+  .badge-icon::after { display: none; }
+  .badge-hole { width: 14px; height: 4px; top: 4px; }
+  .badge-details { gap: 3px; }
+  .badge-details strong { font-size: 1.05rem; }
+  .location-pill { padding: 3px 8px; font-size: .65rem; }
+  .update-panel h2, .history-panel h2 { font-size: 1.3rem; }
+  .history-item { grid-template-columns: 28px minmax(0, 1fr) auto; gap: 8px; }
+  .history-marker { width: 26px; height: 26px; }
+  .history-copy { font-size: .75rem; overflow-wrap: anywhere; }
+  .history-time { grid-column: auto; text-align: right; font-size: .65rem; }
+}
