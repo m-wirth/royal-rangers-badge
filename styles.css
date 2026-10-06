@@ -207,7 +207,7 @@ dialog p:not(.section-kicker) { margin: 0 0 22px; color: var(--muted); font-size
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
 
-/* Compact dashboard: keep the controls in view and scroll the log independently. */
+/* Compact controls with a naturally growing logbook and page scrolling. */
 .site-header { max-width: 968px; padding: 8px 24px; gap: 12px; }
 .brand { gap: 8px; }
 .brand img { width: 32px; height: 32px; }
@@ -220,10 +220,10 @@ h1 em::before { content: " "; }
 main {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto minmax(110px, 1fr);
+  grid-template-rows: auto auto auto;
   gap: 12px;
-  height: calc(100svh - 60px);
-  min-height: 540px;
+  height: auto;
+  min-height: 0;
   padding-bottom: 12px;
 }
 .status-card, .update-panel, .history-panel { padding: 16px; border-radius: 16px; margin: 0; }
@@ -256,7 +256,7 @@ fieldset { margin: 12px 0; }
 .form-message:empty { display: none; }
 .history-panel { grid-column: 1 / -1; display: flex; flex-direction: column; min-height: 0; }
 .history-panel .panel-heading { flex: 0 0 auto; }
-.history-list { margin-top: 10px; overflow-y: auto; min-height: 0; overscroll-behavior: contain; scrollbar-gutter: stable; }
+.history-list { margin-top: 10px; overflow: visible; min-height: 0; }
 .history-item { padding: 10px 0; }
 .history-empty { padding: 10px 0; }
 footer { display: none; }
@@ -266,10 +266,10 @@ footer { display: none; }
   .connection { padding: 6px 10px; }
   main {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto auto auto minmax(100px, 1fr);
+    grid-template-rows: auto auto auto auto;
     gap: 8px;
-    height: calc(100svh - 44px);
-    min-height: 620px;
+    height: auto;
+    min-height: 0;
     padding-bottom: 8px;
   }
   .hero { padding: 2px 0; }
