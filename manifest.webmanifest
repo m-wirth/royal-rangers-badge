@@ -1,0 +1,12 @@
+{
+  "name": "Badge-Finder",
+  "short_name": "Badge",
+  "description": "Live-Status für den gemeinsamen Tür-Badge.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4eddd",
+  "theme_color": "#14291f",
+  "icons": [
+    { "src": "./assets/compass.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#14291f" />
+    <meta
+      name="description"
+      content="Gemeinsamer Live-Status für den Tür-Badge von GLZ und youpj."
+    />
+    <link rel="icon" href="./assets/compass.svg" type="image/svg+xml" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Badge-Finder</title>
+  </head>
+  <body>
+    <div class="topography" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Badge-Finder Startseite">
+        <img src="./assets/compass.svg" alt="" width="46" height="46" />
+        <span>
+          <strong>Badge-Finder</strong>
+          <small>Bereit für den nächsten Einsatz</small>
+        </span>
+      </a>
+      <div class="connection" id="connection-status" role="status">
+        <span class="connection-dot"></span>
+        <span>Verbinde …</span>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">Ein Badge · Ein aktueller Standort</p>
+        <h1 id="page-title">Wo ist der<br /><em>Tür-Badge?</em></h1>
+        <p class="hero-copy">
+          Kurz eintragen, weiterziehen. So weiss das ganze Team sofort, wer den Badge hat.
+        </p>
+      </section>
+
+      <section class="status-card" aria-labelledby="current-status-title">
+        <div class="status-card__header">
+          <div>
+            <p class="section-kicker">Aktueller Stand</p>
+            <h2 id="current-status-title">Badge wird gesucht …</h2>
+          </div>
+          <div class="live-badge"><span></span> Live</div>
+        </div>
+
+        <div class="badge-display" id="badge-display" aria-live="polite">
+          <div class="badge-icon" aria-hidden="true">
+            <span class="badge-hole"></span>
+            <img src="./assets/compass.svg" alt="" />
+          </div>
+          <div class="badge-details">
+            <span class="location-pill location-pill--unknown" id="current-location">Unbekannt</span>
+            <strong id="current-holder">Noch niemand eingetragen</strong>
+            <span id="current-time">Status wird geladen</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="update-panel" aria-labelledby="update-title">
+        <div class="panel-heading">
+          <span class="step-number">01</span>
+          <div>
+            <p class="section-kicker">Status melden</p>
+            <h2 id="update-title">Ich habe den Badge</h2>
+          </div>
+        </div>
+
+        <form id="badge-form">
+          <label class="field-label" for="person-name">Dein Name</label>
+          <input
+            id="person-name"
+            name="person-name"
+            type="text"
+            maxlength="60"
+            autocomplete="name"
+            placeholder="z. B. Marco"
+            required
+          />
+
+          <fieldset>
+            <legend class="field-label">Wo bist du?</legend>
+            <div class="location-options">
+              <label class="location-option location-option--glz">
+                <input type="radio" name="location" value="GLZ" required />
+                <span class="location-option__icon" aria-hidden="true">G</span>
+                <span><strong>GLZ</strong><small>Im Gebäude</small></span>
+                <span class="radio-mark"></span>
+              </label>
+              <label class="location-option location-option--youpj">
+                <input type="radio" name="location" value="youpj" required />
+                <span class="location-option__icon" aria-hidden="true">Y</span>
+                <span><strong>youpj</strong><small>Im Gebäude</small></span>
+                <span class="radio-mark"></span>
+              </label>
+              <label class="location-option location-option--away">
+                <input type="radio" name="location" value="abwesend" required />
+                <span class="location-option__icon" aria-hidden="true">↗</span>
+                <span><strong>Abwesend</strong><small>Nicht vor Ort</small></span>
+                <span class="radio-mark"></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <button class="primary-button" type="submit" id="claim-button">
+            <span>Badge übernehmen</span><span aria-hidden="true">→</span>
+          </button>
+        </form>
+
+        <div class="release-row">
+          <div>
+            <strong>Badge zurückgegeben?</strong>
+            <span>Setzt den aktuellen Status auf «frei».</span>
+          </div>
+          <button class="secondary-button" type="button" id="release-button">Badge freigeben</button>
+        </div>
+        <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="history-panel" aria-labelledby="history-title">
+        <div class="panel-heading">
+          <span class="step-number">02</span>
+          <div>
+            <p class="section-kicker">Logbuch</p>
+            <h2 id="history-title">Letzte Bewegungen</h2>
+          </div>
+          <button class="icon-button" id="refresh-button" type="button" aria-label="Status aktualisieren" title="Aktualisieren">↻</button>
+        </div>
+        <ol class="history-list" id="history-list">
+          <li class="history-empty">Einträge werden geladen …</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer>
+      <img src="./assets/compass.svg" alt="" width="28" height="28" />
+      <p>Allzeit bereit — und der Badge am richtigen Ort.</p>
+    </footer>
+
+    <dialog id="release-dialog">
+      <form method="dialog" id="release-form">
+        <button class="dialog-close" value="cancel" aria-label="Dialog schliessen">×</button>
+        <p class="section-kicker">Badge freigeben</p>
+        <h2>Wer gibt ihn zurück?</h2>
+        <p>Dein Name wird im Logbuch gespeichert.</p>
+        <label class="field-label" for="release-name">Dein Name</label>
+        <input id="release-name" type="text" maxlength="60" autocomplete="name" required />
+        <div class="dialog-actions">
+          <button class="secondary-button" value="cancel">Abbrechen</button>
+          <button class="primary-button" value="confirm" id="confirm-release">Freigeben</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
