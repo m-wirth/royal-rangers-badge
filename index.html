@@ -148,14 +148,14 @@
 
     <dialog id="release-dialog">
       <form method="dialog" id="release-form">
-        <button class="dialog-close" value="cancel" aria-label="Dialog schliessen">×</button>
+        <button class="dialog-close" type="submit" value="cancel" formnovalidate aria-label="Dialog schliessen">×</button>
         <p class="section-kicker">Badge freigeben</p>
         <h2>Wer gibt ihn zurück?</h2>
         <p>Dein Name wird im Logbuch gespeichert.</p>
         <label class="field-label" for="release-name">Dein Name</label>
         <input id="release-name" type="text" maxlength="60" autocomplete="name" required />
         <div class="dialog-actions">
-          <button class="secondary-button" value="cancel">Abbrechen</button>
+          <button class="secondary-button" type="submit" value="cancel" formnovalidate>Abbrechen</button>
           <button class="primary-button" value="confirm" id="confirm-release">Freigeben</button>
         </div>
       </form>
