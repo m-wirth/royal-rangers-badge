@@ -173,7 +173,7 @@ button:disabled { opacity: .55; cursor: wait; }
 footer { padding: 28px 20px 44px; display: flex; justify-content: center; align-items: center; gap: 10px; color: var(--muted); font-size: .75rem; text-align: center; }
 footer img { opacity: .55; }
 
-dialog { width: min(92vw, 460px); padding: 28px; border: 0; border-radius: 20px; color: var(--ink); background: var(--paper); box-shadow: 0 30px 100px rgba(0,0,0,.35); }
+dialog { width: min(92vw, 460px); max-height: calc(100dvh - 24px); overflow: auto; padding: 28px; border: 0; border-radius: 20px; color: var(--ink); background: var(--paper); box-shadow: 0 30px 100px rgba(0,0,0,.35); }
 dialog::backdrop { background: rgba(10,24,17,.7); backdrop-filter: blur(4px); }
 dialog form { margin: 0; }
 dialog h2 { margin-bottom: 10px; }
@@ -181,6 +181,8 @@ dialog p:not(.section-kicker) { margin: 0 0 22px; color: var(--muted); font-size
 .dialog-close { position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border: 0; border-radius: 50%; color: var(--muted); background: rgba(20,41,31,.06); font-size: 1.4rem; }
 .dialog-actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; margin-top: 18px; }
 .dialog-actions .primary-button { justify-content: center; }
+.location-options--release { grid-template-columns: 1fr 1fr; }
+.location-options--release .location-option { min-height: 76px; }
 
 @media (max-width: 680px) {
   .site-header { padding: 16px; }
@@ -196,6 +198,7 @@ dialog p:not(.section-kicker) { margin: 0 0 22px; color: var(--muted); font-size
   .badge-icon { width: 90px; height: 126px; }
   .badge-icon img { width: 52px; }
   .location-options { grid-template-columns: 1fr; }
+  .location-options--release { grid-template-columns: 1fr 1fr; }
   .location-option { min-height: 70px; }
   .release-row { align-items: stretch; flex-direction: column; }
   .release-row button { width: 100%; }

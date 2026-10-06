@@ -7,7 +7,10 @@ create table if not exists public.badge_state (
   location text check (location is null or location in ('GLZ', 'youpj', 'abwesend')),
   updated_by text not null,
   updated_at timestamptz not null default now(),
-  check ((holder_name is null and location is null) or (holder_name is not null and location is not null))
+  check (
+    (holder_name is null and (location is null or location in ('GLZ', 'youpj')))
+    or (holder_name is not null and location is not null)
+  )
 );
 
 create table if not exists public.badge_history (
@@ -63,7 +66,9 @@ begin
 end;
 $$;
 
-create or replace function public.release_badge(p_actor_name text)
+drop function if exists public.release_badge(text);
+
+create or replace function public.release_badge(p_actor_name text, p_location text)
 returns void
 language plpgsql
 security definer
@@ -75,24 +80,27 @@ begin
   if clean_name is null or char_length(clean_name) < 1 then
     raise exception 'Name fehlt';
   end if;
+  if p_location not in ('GLZ', 'youpj') then
+    raise exception 'Ungültiger Ablageort';
+  end if;
 
   insert into public.badge_state (id, holder_name, location, updated_by, updated_at)
-  values (1, null, null, clean_name, now())
+  values (1, null, p_location, clean_name, now())
   on conflict (id) do update set
     holder_name = null,
-    location = null,
+    location = excluded.location,
     updated_by = excluded.updated_by,
     updated_at = excluded.updated_at;
 
   insert into public.badge_history (actor_name, holder_name, location, action)
-  values (clean_name, null, null, 'released');
+  values (clean_name, null, p_location, 'released');
 end;
 $$;
 
 revoke all on function public.claim_badge(text, text) from public;
-revoke all on function public.release_badge(text) from public;
+revoke all on function public.release_badge(text, text) from public;
 grant execute on function public.claim_badge(text, text) to anon, authenticated;
-grant execute on function public.release_badge(text) to anon, authenticated;
+grant execute on function public.release_badge(text, text) to anon, authenticated;
 
 grant select on public.badge_state to anon, authenticated;
 grant select on public.badge_history to anon, authenticated;

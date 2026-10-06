@@ -80,11 +80,12 @@ function exactTime(value) {
 function renderState(state) {
   elements.location.className = "location-pill";
   if (!state?.holder_name) {
-    elements.location.textContent = "Frei";
-    elements.location.classList.add("location-pill--free");
-    elements.holder.textContent = "Der Badge ist frei";
+    const storedAt = state?.location;
+    elements.location.textContent = storedAt || "Frei";
+    elements.location.classList.add(locationClasses[storedAt] || "location-pill--free");
+    elements.holder.textContent = storedAt ? `Der Badge liegt im ${storedAt}` : "Der Badge ist frei";
     elements.time.textContent = state?.updated_at
-      ? `Freigegeben ${timeAgo(state.updated_at)} von ${state.updated_by}`
+      ? `${storedAt ? "Platziert" : "Freigegeben"} ${timeAgo(state.updated_at)} von ${state.updated_by}`
       : "Bereit für den ersten Eintrag";
     return;
   }
@@ -104,7 +105,7 @@ function renderHistory(rows = []) {
     item.className = "history-item";
     const marker = document.createElement("span");
     marker.className = `history-marker${row.action === "released" ? " history-marker--release" : ""}`;
-    marker.textContent = row.action === "released" ? "✓" : row.location === "GLZ" ? "G" : row.location === "youpj" ? "Y" : "↗";
+    marker.textContent = row.location === "GLZ" ? "G" : row.location === "youpj" ? "Y" : row.action === "released" ? "✓" : "↗";
     const copy = document.createElement("span");
     copy.className = "history-copy";
     const main = document.createElement("strong");
@@ -112,7 +113,7 @@ function renderHistory(rows = []) {
       ? `${row.actor_name} hat den Badge freigegeben`
       : `${row.holder_name} hat den Badge übernommen`;
     const detail = document.createElement("span");
-    detail.textContent = row.action === "released" ? "Status: frei" : `Standort: ${row.location}`;
+    detail.textContent = row.action === "released" ? `Abgelegt im ${row.location}` : `Standort: ${row.location}`;
     copy.append(main, detail);
     const time = document.createElement("time");
     time.className = "history-time";
@@ -165,18 +166,19 @@ async function claimBadge(event) {
 async function releaseBadge(event) {
   event.preventDefault();
   if (event.submitter?.value === "cancel") return elements.releaseDialog.close();
-  if (!elements.releaseName.reportValidity()) return;
+  if (!elements.releaseForm.reportValidity()) return;
   const name = cleanName(elements.releaseName.value);
+  const location = new FormData(elements.releaseForm).get("release-location");
   rememberName(name);
   elements.confirmRelease.disabled = true;
-  const { error } = await supabase.rpc("release_badge", { p_actor_name: name });
+  const { error } = await supabase.rpc("release_badge", { p_actor_name: name, p_location: location });
   elements.confirmRelease.disabled = false;
   if (error) {
     elements.releaseDialog.close();
     return showMessage("Der Badge konnte nicht freigegeben werden.", "error");
   }
   elements.releaseDialog.close();
-  showMessage("Der Badge ist jetzt als frei markiert.", "success");
+  showMessage(`Der Badge liegt jetzt im ${location}.`, "success");
   await loadData({ quiet: true });
 }
 
