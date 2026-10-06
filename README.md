@@ -9,7 +9,7 @@ Geplante öffentliche URL: <https://m-wirth.github.io/royal-rangers-badge/>
 1. Ein kostenloses Supabase-Projekt erstellen.
 2. `supabase-schema.sql` im SQL Editor ausführen.
 3. Project URL und den öffentlichen `anon`/`publishable` Key aus den API-Einstellungen nach `config.js` kopieren.
-4. Ein Push auf `main` veröffentlicht die App automatisch über GitHub Actions und GitHub Pages.
+4. GitHub Pages veröffentlicht den Ordner `/` des Branches `main` automatisch.
 
 Es werden keine geheimen Schlüssel im Frontend verwendet. Anonyme Besucher dürfen Daten lesen und nur über die beiden validierten Funktionen `claim_badge` und `release_badge` verändern.
 

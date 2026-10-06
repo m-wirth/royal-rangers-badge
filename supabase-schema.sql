@@ -22,11 +22,13 @@ create table if not exists public.badge_history (
 alter table public.badge_state enable row level security;
 alter table public.badge_history enable row level security;
 
+drop policy if exists "Status ist öffentlich lesbar" on public.badge_state;
 create policy "Status ist öffentlich lesbar"
   on public.badge_state for select
   to anon, authenticated
   using (true);
 
+drop policy if exists "Logbuch ist öffentlich lesbar" on public.badge_history;
 create policy "Logbuch ist öffentlich lesbar"
   on public.badge_history for select
   to anon, authenticated
